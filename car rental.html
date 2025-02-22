@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Subhyatara - Car Rental</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        body { 
+            font-family: Arial, sans-serif; 
+            margin: 0; 
+            padding: 0; 
+            text-align: center; 
+            background: #f4f4f4; 
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: #007bff;
+            padding: 15px;
+        }
+        .logo {
+            display: flex;
+            align-items: center;
+            color: white;
+            font-size: 20px;
+            font-weight: bold;
+        }
+        .logo img {
+            height: 40px;
+            margin-right: 10px;
+        }
+        .nav-links {
+            display: flex;
+            gap: 20px;
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+        .nav-links li {
+            display: inline;
+        }
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            font-size: 16px;
+            padding: 10px;
+        }
+        .nav-links a:hover {
+            background: #0056b3;
+            border-radius: 5px;
+        }
+        .form-container {
+            max-width: 900px;
+            margin: 20px auto;
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        .car-search {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            justify-content: center;
+        }
+        .car-search input, .car-search select, .car-search button {
+            padding: 10px;
+            font-size: 16px;
+            border-radius: 5px;
+            border: 1px solid #ddd;
+        }
+        .car-search button {
+            background: #007bff;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+        .car-search button:hover {
+            background: #0056b3;
+        }
+        .car-list {
+            margin-top: 20px;
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 20px;
+        }
+        .car-card {
+            background: white;
+            padding: 15px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            text-align: left;
+            transition: transform 0.3s ease-in-out;
+        }
+        .car-card:hover {
+            transform: scale(1.05);
+        }
+        .car-card img {
+            width: 100%;
+            border-radius: 10px;
+        }
+        .car-card .book-btn {
+            display: block;
+            margin-top: 10px;
+            padding: 10px;
+            background: #28a745;
+            color: white;
+            text-align: center;
+            border-radius: 5px;
+            text-decoration: none;
+        }
+        .car-card .book-btn:hover {
+            background: #218838;
+        }
+        footer {
+            background: #333;
+            color: white;
+            padding: 20px;
+            text-align: center;
+            margin-top: auto;
+            width: 100%;
+        }
+    </style>
+    <script>
+        function searchCars() {
+            const carType = document.getElementById("carType").value;
+            const carsContainer = document.getElementById("carsContainer");
+            carsContainer.innerHTML = "";
+            
+            const cars = [
+                { name: "Toyota Corolla", type: "Economy", price: "$50/day", img: "car1.jpg" },
+                { name: "Ford Explorer", type: "SUV", price: "$80/day", img: "car2.jpg" },
+                { name: "Mercedes S-Class", type: "Luxury", price: "$150/day", img: "car3.jpg" },
+                { name: "Honda Civic", type: "Economy", price: "$45/day", img: "car4.jpg" },
+                { name: "Jeep Wrangler", type: "SUV", price: "$90/day", img: "car5.jpg" },
+                { name: "BMW X5", type: "Luxury", price: "$160/day", img: "car6.jpg" }
+            ];
+            
+            const filteredCars = cars.filter(car => car.type === carType);
+            
+            filteredCars.forEach(car => {
+                const carCard = document.createElement("div");
+                carCard.classList.add("car-card");
+                carCard.innerHTML = `
+                    <img src="${car.img}" alt="${car.name}">
+                    <h3>${car.name}</h3>
+                    <p>Type: ${car.type}</p>
+                    <p>Price: ${car.price}</p>
+                    <a href="#" class="book-btn">Book Now</a>
+                `;
+                carsContainer.appendChild(carCard);
+            });
+        }
+    </script>
+</head>
+<body>
+    <nav class="navbar">
+        <div class="logo">
+            <img src="assets/Logo.png" alt="Subhyatara Logo">
+            
+        </div>
+        <ul class="nav-links">
+            <li><a href="new.html">Home</a></li>
+            <li><a href="hotel.html">Hotels</a></li>
+            <li><a href="car rental.html">Car Rental</a></li>
+            <li><a href="cruises.html">Cruises</a></li>
+        </ul>
+        <ul class="nav-links">
+            <li><a href="about.html">about us</a></li>
+            <li><a href="#">contact us</a></li>
+        </ul>
+    </nav>
+    
+    <div class="form-container">
+        <h2>Find a Car Rental</h2>
+        <div class="car-search">
+            <input type="text" id="pickupLocation" placeholder="Enter Pickup Location">
+            <input type="date" id="pickupDate">
+            <input type="date" id="returnDate">
+            <select id="carType">
+                <option>Economy</option>
+                <option>SUV</option>
+                <option>Luxury</option>
+            </select>
+            <button onclick="searchCars()">Search Cars</button>
+        </div>
+        
+        <div class="car-list" id="carsContainer"></div>
+    </div>
+    
+    <footer>
+        <p>&copy; 2025 Subhyatara. All rights reserved.</p>
+        <p>Contact us: support@subhyatara.com | +1 234 567 890</p>
+        <p>Follow us: Facebook | Twitter | Instagram</p>
+    </footer>
+</body>
+</html>
